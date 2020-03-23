@@ -12,9 +12,31 @@ public class TextLocalizationEditWindow : EditorWindow
 
     void OnGUI()
     {
-        if (GUILayout.Button("Hello"))
+        if (LocalizationSystem.FileExist(LocalizationSystem.CsvName))
         {
-            Debug.Log("Hello");
+            OnGUILocalization();
+        }
+        else
+        {
+            OnGUICreation();
+        }
+    }
+
+    void OnGUICreation()
+    {
+        // ToDo: Show info box - no existing file (create (or load XML - FUTURE))
+        if (GUILayout.Button("Create new file"))
+        {
+            LocalizationSystem.CreateNewCsvFile();
+        }
+    }
+
+    void OnGUILocalization()
+    {
+        // ToDo: show tool for editing current localization file.
+        if (GUILayout.Button("Edit file"))
+        {
+            Debug.Log("Let's start editing!");
         }
     }
 }
