@@ -13,7 +13,7 @@ public class LocalizationSystem
     public static void Init()
     {
         _fileManager = new FileManager();
-        _csvManager = new CsvManager();
+        _csvManager = new CsvManager(_fileManager);
 
         _isInit = true;
     }

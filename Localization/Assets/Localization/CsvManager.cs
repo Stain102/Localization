@@ -1,5 +1,6 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class CsvManager
@@ -8,12 +9,13 @@ public class CsvManager
     private char lineSeperator = '\n';
     private char surround = '"';
     private string[] fieldSeperator = { "\",\"" };
-    
-    public CsvManager()
-    {
-        
-    }
+    private FileManager _fileManager;
 
+    public CsvManager(FileManager fileManager)
+    {
+        _fileManager = fileManager;
+    }
+    
     public string CreateNewFile()
     {
         csvFile = new TextAsset("");

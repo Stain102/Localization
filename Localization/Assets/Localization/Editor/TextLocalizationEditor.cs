@@ -24,9 +24,8 @@ public class TextLocalizationEditWindow : EditorWindow
 
     void OnGUICreation()
     {
-        // ToDo: show file creation tools
         // ToDo: Show info box - no existing file (create (or load XML - FUTURE))
-        if (GUILayout.Button("Create file"))
+        if (GUILayout.Button("Create new file"))
         {
             LocalizationSystem.CreateNewCsvFile();
         }
