@@ -42,6 +42,7 @@ public class FileManager
     public void SaveFile(string path, string value)
     {
         File.WriteAllText(path, value);
+        AssetDatabase.Refresh();
     }
     
     // ToDo: Add append function??

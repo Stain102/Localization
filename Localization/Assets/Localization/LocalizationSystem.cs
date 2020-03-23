@@ -6,14 +6,14 @@ public class LocalizationSystem
 {
     private static bool _isInit = false;
     private static FileManager _fileManager;
-
-    public const string CSVName = "localization";
+    private static CsvManager _csvManager;
+    
+    public const string CsvName = "localization";
 
     public static void Init()
     {
-        if (_isInit) return; // ToDo: remove later
-        
         _fileManager = new FileManager();
+        _csvManager = new CsvManager();
 
         _isInit = true;
     }
@@ -22,5 +22,16 @@ public class LocalizationSystem
     {
         if (!_isInit) { Init(); }
         return _fileManager.FileExist(path);
+    }
+
+    public static void CreateNewCsvFile()
+    {
+        if (!_isInit) { Init(); }
+        _fileManager.SaveFile(GetCsvPath(), _csvManager.CreateNewFile());
+    }
+
+    private static string GetCsvPath()
+    {
+        return "Assets/Resources/" + CsvName + ".csv";
     }
 }

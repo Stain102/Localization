@@ -7,13 +7,12 @@ public class TextLocalizationEditWindow : EditorWindow
     [MenuItem("Window/Localization")]
     public static void Open()
     {
-        LocalizationSystem.Init(); // ToDo: remove later
         GetWindow<TextLocalizationEditWindow>("Localization");
     }
 
     void OnGUI()
     {
-        if (LocalizationSystem.FileExist(LocalizationSystem.CSVName))
+        if (LocalizationSystem.FileExist(LocalizationSystem.CsvName))
         {
             OnGUILocalization();
         }
@@ -26,9 +25,10 @@ public class TextLocalizationEditWindow : EditorWindow
     void OnGUICreation()
     {
         // ToDo: show file creation tools
+        // ToDo: Show info box - no existing file (create (or load XML - FUTURE))
         if (GUILayout.Button("Create file"))
         {
-            Debug.Log("Create a new file!");
+            LocalizationSystem.CreateNewCsvFile();
         }
     }
 
