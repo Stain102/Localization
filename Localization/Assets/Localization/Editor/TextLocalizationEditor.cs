@@ -4,27 +4,38 @@ using UnityEditor;
 
 public class TextLocalizationEditWindow : EditorWindow
 {
+    private static TextLocalizationEditWindow _window;
+    
     [MenuItem("Window/Localization")]
     public static void Open()
     {
-        GetWindow<TextLocalizationEditWindow>("Localization");
+        _window = GetWindow<TextLocalizationEditWindow>("Localization");
+        _window.ShowUtility();
     }
 
     void OnGUI()
     {
         if (LocalizationSystem.FileExist(LocalizationSystem.CsvName))
         {
+            // Set window size (Float mode)
+            _window.minSize = new Vector2(500, 300);
+            _window.maxSize = new Vector2(1000, 500);
+            
             OnGUILocalization();
         }
         else
         {
+            // Set window size (Float mode)
+            _window.minSize = new Vector2(250, 58);
+            _window.maxSize = minSize;
+            
             OnGUICreation();
         }
     }
 
     void OnGUICreation()
     {
-        // ToDo: Show info box - no existing file (create (or load XML - FUTURE))
+        EditorGUILayout.HelpBox("No file was found. Create a new file to begin!", MessageType.Info);
         if (GUILayout.Button("Create new file"))
         {
             LocalizationSystem.CreateNewCsvFile();
