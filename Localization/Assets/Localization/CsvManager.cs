@@ -66,7 +66,26 @@ public class CsvManager
 
     public void RemoveLanguage(string langKey)
     {
+        _languageManager.DeSelectLanguage(langKey);
         
+        // Update Csv file
+        List<string[]> newLines = new List<string[]>();
+        string[] lines = _csvReader.SplitText(_asset.text);
+        List<string> headers = _csvReader.SplitHeader(lines[0]).ToList();
+        TrimValues(headers);
+
+        int langIndex = headers.IndexOf(langKey);
+        for (int i = 1; i < lines.Length; i++)
+        {
+            string line = lines[i];
+            List<string> fields = _csvReader.SplitLine(line).ToList();
+            TrimValues(fields);
+            fields.RemoveAt(langIndex);
+            newLines.Add(fields.ToArray());
+        }
+        
+        _fileManager.SaveFile(GetFilePath(), _csvBuilder.BuildCsv(headers.ToArray(), newLines));
+        LoadLocalization();
     }
 
     #region Private
