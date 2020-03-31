@@ -21,4 +21,16 @@ public class LocalizationSystem
         if (!_isInit) { Init(); }
         Debug.Log("TestCompleted!");
     }
+    
+    #region Unity Editor
+    public static void AddLanguage(string langKey)
+    {
+        _csvManager.AddLanguage(langKey);
+    }
+
+    public static void RemoveLanguage(string langKey)
+    {
+        _csvManager.RemoveLanguage(langKey);
+    }
+    #endregion
 }

@@ -36,8 +36,6 @@ public class CsvManager
             string langKey = _csvReader.TrimValue(headers[i]);
             languageManager.SelectLanguage(langKey);
         }
-
-        Debug.Log("Selected languages: " + _languageManager.GetSelectedLanguageKeys());
     }
 
     public void AddLanguage(string langKey)
