@@ -18,7 +18,7 @@ public class LanguageManager
     {
         if (_selectedLanguages.Contains(value))
         {
-            Debug.LogWarning("Language key has already been selected!");
+            Debug.LogWarning("Language key '" + value + "' has already been selected!");
             return;
         }
         _selectedLanguages.Add(value);
@@ -78,5 +78,10 @@ public class LanguageManager
         }
         
         return languages;
+    }
+
+    public List<string> GetSelectedLanguageKeys()
+    {
+        return _selectedLanguages;
     }
 }

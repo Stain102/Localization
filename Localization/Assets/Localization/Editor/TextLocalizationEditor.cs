@@ -12,8 +12,6 @@ public class TextLocalizationEditWindow : EditorWindow
     {
         _window = GetWindow<TextLocalizationEditWindow>("Localization");
         _window.ShowUtility();
-        
-        LocalizationSystem.Init();
     }
 
     void OnGUI()
@@ -44,5 +42,9 @@ public class TextLocalizationEditWindow : EditorWindow
     void OnGUITranslations()
     {
         GUILayout.Label("Show available translations!");
+        if (GUILayout.Button("Test"))
+        {
+            LocalizationSystem.Test();
+        }
     }
 }
