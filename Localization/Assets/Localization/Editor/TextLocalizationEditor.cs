@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 
 public class TextLocalizationEditWindow : EditorWindow
@@ -13,45 +12,27 @@ public class TextLocalizationEditWindow : EditorWindow
     {
         _window = GetWindow<TextLocalizationEditWindow>("Localization");
         _window.ShowUtility();
+        
+        LocalizationSystem.Init();
     }
 
     void OnGUI()
     {
-        if (LocalizationSystem.FileExist(LocalizationSystem.CsvName))
-        {
-            // Set window size (Float mode)
-            _window.minSize = new Vector2(500, 300);
-            _window.maxSize = new Vector2(1000, 500);
+        // Set window size (Float mode)
+        _window.minSize = new Vector2(500, 300);
+        _window.maxSize = new Vector2(1000, 500);
             
-            GUILayout.BeginHorizontal();
-            _tabIndex = GUILayout.Toolbar(_tabIndex, _tabStrings, GUILayout.Width(250));
-            GUILayout.EndHorizontal();
-            switch (_tabIndex)
-            {
-                case 0:
-                    OnGUITranslations();
-                    break;
-                case 1:
-                    OnGUILanguages();
-                    break;
-            }
-        }
-        else
+        GUILayout.BeginHorizontal();
+        _tabIndex = GUILayout.Toolbar(_tabIndex, _tabStrings, GUILayout.Width(250));
+        GUILayout.EndHorizontal();
+        switch (_tabIndex)
         {
-            // Set window size (Float mode)
-            _window.minSize = new Vector2(250, 58);
-            _window.maxSize = minSize;
-            
-            OnGUICreation();
-        }
-    }
-
-    void OnGUICreation()
-    {
-        EditorGUILayout.HelpBox("No file was found. Create a new file to begin!", MessageType.Info);
-        if (GUILayout.Button("Create new file"))
-        {
-            LocalizationSystem.CreateNewCsvFile();
+            case 0:
+                OnGUITranslations();
+                break;
+            case 1:
+                OnGUILanguages();
+                break;
         }
     }
 

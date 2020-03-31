@@ -1,17 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class LanguageManager
 {
     private TextAsset _asset;
     private readonly List<string> _selectedLanguages;
-    private CSVReader _csvReader;
+    private CsvReader _csvReader;
     
     public LanguageManager(FileManager fileManager)
     {
-        _csvReader = new CSVReader();
+        _csvReader = new CsvReader();
         _asset = fileManager.LoadFile("languages");
         _selectedLanguages = new List<string>();
     }
