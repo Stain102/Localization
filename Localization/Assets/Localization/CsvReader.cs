@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-public class CSVReader : CSVBase
+public class CsvReader : CsvBase
 {
     private string[] fieldSeperator = {"\",\""};
     private Regex csvParser = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");

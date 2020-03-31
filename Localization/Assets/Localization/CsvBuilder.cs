@@ -1,20 +1,17 @@
 ﻿using System.Collections.Generic;
 
-public class CSVBuilder : CSVBase
+public class CsvBuilder : CsvBase
 {
     private char fieldSeparator = ',';
-    
+
+    public string BuildNewCsv(string[] headers)
+    {
+        return CreateHeader(headers);
+    }
+
     public string BuildCsv(string[] headers, List<string[]> translations)
     {
-        string csv = "";
-        
-        // Headers
-        for (int i = 0; i < headers.Length; i++)
-        {
-            csv += surround + headers[i] + surround;
-            if (i != headers.Length - 1)
-                csv += fieldSeparator;
-        }
+        string csv = CreateHeader(headers);
         csv += lineSeparator;
         
         // Translations
@@ -30,6 +27,18 @@ public class CSVBuilder : CSVBase
 
             if (i != translations.Count - 1)
                 csv += lineSeparator;
+        }
+        return csv;
+    }
+    
+    private string CreateHeader(string[] headers)
+    {
+        string csv = "";
+        for (int i = 0; i < headers.Length; i++)
+        {
+            csv += surround + headers[i] + surround;
+            if (i != headers.Length - 1)
+                csv += fieldSeparator;
         }
         return csv;
     }
