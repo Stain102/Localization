@@ -26,21 +26,26 @@ public class CsvManager
             CreateNewFile();
         
         LoadLocalization();
-        
-        // Set selected languages
-        string[] lines = _csvReader.SplitText(_asset.text);
+        UpdateLanguageManager();
+    }
+
+    private void UpdateLanguageManager()
+    {
+        string[] lines = _csvReader.SplitLine(_asset.text);
         string[] headers = _csvReader.SplitHeader(lines[0]);
 
         for (int i = 1; i < headers.Length; i++)
         {
             string langKey = _csvReader.TrimValue(headers[i]);
-            languageManager.SelectLanguage(langKey);
+            _languageManager.AddLanguage(langKey);
         }
+        
+        // Set active language
     }
 
     public void AddLanguage(string langKey)
     {
-        _languageManager.SelectLanguage(langKey);
+        _languageManager.AddLanguage(langKey);
         
         // Update Csv file
         List<string[]> newLines = new List<string[]>();
@@ -58,13 +63,12 @@ public class CsvManager
             newLines.Add(fields.ToArray());
         }
         
-        _fileManager.SaveFile(GetFilePath(), _csvBuilder.BuildCsv(headers.ToArray(), newLines));
-        LoadLocalization();
+        UpdateCsv(_csvBuilder.BuildCsv(headers.ToArray(), newLines));
     }
 
     public void RemoveLanguage(string langKey)
     {
-        _languageManager.DeSelectLanguage(langKey);
+        _languageManager.RemoveLanguage(langKey);
         
         // Update Csv file
         List<string[]> newLines = new List<string[]>();
@@ -73,6 +77,8 @@ public class CsvManager
         TrimValues(headers);
 
         int langIndex = headers.IndexOf(langKey);
+        headers.RemoveAt(langIndex);
+        
         for (int i = 1; i < lines.Length; i++)
         {
             string line = lines[i];
@@ -82,18 +88,22 @@ public class CsvManager
             newLines.Add(fields.ToArray());
         }
         
-        _fileManager.SaveFile(GetFilePath(), _csvBuilder.BuildCsv(headers.ToArray(), newLines));
-        LoadLocalization();
+        UpdateCsv(_csvBuilder.BuildCsv(headers.ToArray(), newLines));
     }
 
     #region Private
-    private List<string> TrimValues(List<string> values)
+    private void UpdateCsv(string csv)
+    {
+        _fileManager.SaveFile(GetFilePath(), csv);
+        LoadLocalization();
+    }
+    
+    private void TrimValues(List<string> values)
     {
         for (int i = 0; i < values.Count(); i++)
         {
             values[i] = _csvReader.TrimValue(values[i]);
         }
-        return values;
     }
     
     private void LoadLocalization()
