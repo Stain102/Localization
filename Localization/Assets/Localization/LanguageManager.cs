@@ -4,29 +4,37 @@ using UnityEngine;
 public class LanguageManager
 {
     private TextAsset _asset;
-    private readonly List<string> _selectedLanguages;
+    private readonly List<string> _languages;
     private CsvReader _csvReader;
     
     public LanguageManager(FileManager fileManager)
     {
         _csvReader = new CsvReader();
         _asset = fileManager.LoadFile("languages");
-        _selectedLanguages = new List<string>();
+        _languages = new List<string>();
     }
 
-    public void SelectLanguage(string value)
+    #region RunTime
+    public List<string> GetAvailableLanguages()
     {
-        if (_selectedLanguages.Contains(value))
+        return _languages;
+    }
+    #endregion
+
+    #region Editor
+    public void AddLanguage(string langKey)
+    {
+        if (_languages.Contains(langKey))
         {
-            Debug.LogWarning("Language key '" + value + "' has already been selected!");
+            Debug.LogWarning("Language key '" + langKey + "' has already been selected!");
             return;
         }
-        _selectedLanguages.Add(value);
+        _languages.Add(langKey);
     }
 
-    public void DeSelectLanguage(string value)
+    public void RemoveLanguage(string langKey)
     {
-        _selectedLanguages.Remove(value);
+        _languages.Remove(langKey);
     }
 
     public List<Language> GetAllLanguages()
@@ -53,35 +61,31 @@ public class LanguageManager
         return languageList;
     }
     
-    public List<Language> GetAvailableLanguages()
+    public List<Language> GetSearchableLanguages()
     {
         List<Language> languageList = GetAllLanguages();
 
-        for (int i = 0; i < _selectedLanguages.Count; i++)
+        for (int i = 0; i < _languages.Count; i++)
         {
-            int index = languageList.FindIndex(language => language.Key == _selectedLanguages[i]);
+            int index = languageList.FindIndex(language => language.Key == _languages[i]);
             languageList.RemoveAt(index);
         }
         
         return languageList;
     }
 
-    public List<Language> GetSelectedLanguages()
+    public List<Language> GetAddedLanguages()
     {
         List<Language> languageList = GetAllLanguages();
         List<Language> languages = new List<Language>();
 
-        for (int i = 0; i < _selectedLanguages.Count; i++)
+        for (int i = 0; i < _languages.Count; i++)
         {
-            int index = languageList.FindIndex(language => language.Key == _selectedLanguages[i]);
+            int index = languageList.FindIndex(language => language.Key == _languages[i]);
             languages.Add(languageList[index]);
         }
         
         return languages;
     }
-
-    public List<string> GetSelectedLanguageKeys()
-    {
-        return _selectedLanguages;
-    }
+    #endregion
 }
