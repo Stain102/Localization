@@ -4,37 +4,29 @@ using UnityEngine;
 public class LanguageManager
 {
     private TextAsset _asset;
-    private readonly List<string> _languages;
+    private readonly List<string> _langKeys;
     private CsvReader _csvReader;
     
     public LanguageManager(FileManager fileManager)
     {
         _csvReader = new CsvReader();
         _asset = fileManager.LoadFile("languages");
-        _languages = new List<string>();
+        _langKeys = new List<string>();
     }
 
-    #region RunTime
-    public List<string> GetAvailableLanguages()
-    {
-        return _languages;
-    }
-    #endregion
-
-    #region Editor
     public void AddLanguage(string langKey)
     {
-        if (_languages.Contains(langKey))
+        if (_langKeys.Contains(langKey))
         {
             Debug.LogWarning("Language key '" + langKey + "' has already been selected!");
             return;
         }
-        _languages.Add(langKey);
+        _langKeys.Add(langKey);
     }
 
     public void RemoveLanguage(string langKey)
     {
-        _languages.Remove(langKey);
+        _langKeys.Remove(langKey);
     }
 
     public List<Language> GetAllLanguages()
@@ -65,9 +57,9 @@ public class LanguageManager
     {
         List<Language> languageList = GetAllLanguages();
 
-        for (int i = 0; i < _languages.Count; i++)
+        for (int i = 0; i < _langKeys.Count; i++)
         {
-            int index = languageList.FindIndex(language => language.Key == _languages[i]);
+            int index = languageList.FindIndex(language => language.Key == _langKeys[i]);
             languageList.RemoveAt(index);
         }
         
@@ -79,13 +71,12 @@ public class LanguageManager
         List<Language> languageList = GetAllLanguages();
         List<Language> languages = new List<Language>();
 
-        for (int i = 0; i < _languages.Count; i++)
+        for (int i = 0; i < _langKeys.Count; i++)
         {
-            int index = languageList.FindIndex(language => language.Key == _languages[i]);
+            int index = languageList.FindIndex(language => language.Key == _langKeys[i]);
             languages.Add(languageList[index]);
         }
         
         return languages;
     }
-    #endregion
 }
