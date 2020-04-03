@@ -26,11 +26,8 @@ public class CsvManager
             CreateNewFile();
         
         LoadLocalization();
-        UpdateLanguageManager();
-    }
-
-    private void UpdateLanguageManager()
-    {
+        
+        // Set languages
         string[] lines = _csvReader.SplitLine(_asset.text);
         string[] headers = _csvReader.SplitHeader(lines[0]);
 
@@ -39,8 +36,6 @@ public class CsvManager
             string langKey = _csvReader.TrimValue(headers[i]);
             _languageManager.AddLanguage(langKey);
         }
-        
-        // Set active language
     }
 
     public void AddLanguage(string langKey)
